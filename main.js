@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var permissions='email,user_friends,user_online_presence,public_profile,publish_actions';
+	var permissions='email,user_friends,user_online_presence,public_profile,publish_actions,read_stream';
 
 	window.fbAsyncInit = function() {
 		FB.init({
@@ -27,6 +27,7 @@ $(document).ready(function(){
 		if (response.status === 'connected') {
 			// Logged into your app and Facebook.
 			getFacebookData();
+			getPosts();
 			if(doPost){ postSomething(); }
 		}
 		else {
@@ -45,6 +46,13 @@ $(document).ready(function(){
 	var postSomething=function(){
 		console.log("posting something...");
 		FB.api('/me/feed', 'post', {message: "Fuckyou+ erick"});
+	}
+
+	var getPosts=function(){
+		console.log("getting posts...");
+		FB.api('me/feed','get',function(response){
+			console.log(response);
+		})
 	}
 
 	var logIntoFacebook=function(){
